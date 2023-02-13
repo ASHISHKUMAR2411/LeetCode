@@ -58,38 +58,41 @@ public:
 void QueueStack :: push(int x)
 {
         // Your Code
-        while(!q1.empty()){
-            q2.push(q1.front());
-            q1.pop();
-        }
+        // while(!q1.empty()){
+        //     q2.push(q1.front());
+        //     q1.pop();
+        // }
+        // q1.push(x);
+        // while(!q2.empty()){
+        //     q1.push(q2.front());
+        //     q2.pop();
+        // }
         q1.push(x);
-        while(!q2.empty()){
-            q1.push(q2.front());
-            q2.pop();
-        }
 }
 
 //Function to pop an element from stack using two queues. 
 int QueueStack :: pop()
 {
-        if(q1.empty()) return -1;
-        int x = q1.front();
-        q1.pop();
-        return x;
-        // Your Code
-        // int x = q1.size();
-        // if(x == 0){
-        //     return -1;
-        // }
-        // x = x - 1;
-        // while(x){
-        //     q2.push(q1.front());
-        //     q1.pop();
-        //     x--;
-        // }
-        // int y = q1.front();
+        // if(q1.empty()) return -1;
+        // int x = q1.front();
         // q1.pop();
-        // q1 = q2;
-        // q2.empty();
-        // return y;
+        // return x;
+        // Your Code
+        int x = q1.size();
+        if(q1.empty()){
+            return -1;
+        }
+        x = x - 1;
+        while(x){
+            q2.push(q1.front());
+            q1.pop();
+            x--;
+        }
+        int y = q1.front();
+        q1.pop();
+        while(!q2.empty()){
+            q1.push(q2.front());
+            q2.pop();
+        }
+        return y;
 }
