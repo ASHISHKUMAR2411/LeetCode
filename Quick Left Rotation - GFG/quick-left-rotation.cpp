@@ -10,20 +10,11 @@ class Solution{
 	void leftRotate(int arr[], int k, int n) 
 	{ 
 	   // Your code goes here
-	   // O(n) time and O(k) space
+	   // O(n*k) time and O(k) space
 	   k = k%n;
-	   if(k > 0){
-	   int a[k];
-	   for(int i = 0; i < k; i++){
-	       a[i] = arr[i];
-	   }
-	   for(int i = k; i < n; i++){
-	       arr[i-k] = arr[i];
-	   }
-	   for(int i = 0; i < k; i++){
-	       arr[n - k + i] = a[i];
-	   }
-	   }
+	   reverse(arr, arr + k);
+	   reverse(arr + k, arr + n);
+	   reverse(arr, arr + n);
 	} 
 		 
 
