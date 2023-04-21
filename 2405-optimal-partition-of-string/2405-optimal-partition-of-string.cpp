@@ -1,26 +1,18 @@
 class Solution {
 public:
     int partitionString(string s) {
-        int count = 0;
-        set<char> st;
-        int prev = 0;
-        for(int i = 0; i < s.size(); i++){
-            st.insert(s[i]);
-            if(st.size() != (i - prev + 1)){
+        int count = 1; 
+        int mask = 0;
+        for(int i = 0; i < s.length(); i++){
+            int shift = s[i] - 'a';
+            if(mask & (1 << shift)){
                 count++;
-                for(auto i : st){
-                    cout << i << " ";
-                }
-                cout << endl;
-                st.clear();
-                st.insert(s[i]);
-                prev = i;
+                mask = 0;
             }
-        }
-        if(st.size()){
-            count++;
+            mask |= 1 << shift;
         }
         return count;
+        
         
     }
 };
