@@ -1,6 +1,8 @@
 class Solution {
 public:
     int minDays(vector<int>& b, int m, int k) {
+        int n = b.size();
+        if(m*1ll*k > n) return -1;
         int l = 1, r = *max_element(b.begin(), b.end());
         int mini = INT_MAX;
         while(l <= r){
