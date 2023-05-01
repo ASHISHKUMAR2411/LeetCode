@@ -1,19 +1,16 @@
 class Solution {
 public:
     int sumOddLengthSubarrays(vector<int>& arr) {
-        int sum = 0;
-        // for(int i = 0;i<(int)(arr.size());i++){
-        //     sum+= arr[i];
-        // }
-        for(int i = 0;i<(int)(arr.size());i++){
-            for(int j = i;j<(int)(arr.size());j++){
-                if((j-i)%2 == 0){
-                    for(int k = i;k<=j;k++){
-                        sum+=arr[k];
-                    }
-                }
-            }
+        int total = 0;
+        int n = arr.size();
+        for(int i =0; i < n; i++){
+            int o_l = i/2+1;
+            int e_l = (i+1)/2;
+            int e_r = (n-i)/2;
+            int o_r = (n-i-1)/2 + 1;
+            int k = o_r*o_l + e_l*e_r;
+            total += k*arr[i];
         }
-        return sum;
+        return total;
     }
 };
