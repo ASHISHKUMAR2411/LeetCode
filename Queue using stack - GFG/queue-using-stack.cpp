@@ -14,17 +14,13 @@ public:
     }
 
     int dequeue() {
-        if(input.size() == 0){
-            return -1;
-        }
-        int size = input.size();
-        while(size > 1){
+        if(input.empty()) return -1;
+        while(!input.empty()){
             output.push(input.top());
             input.pop();
-            size--;
         }
-        int x = input.top();
-        input.pop();
+        int x = output.top();
+        output.pop();
         while(!output.empty()){
             input.push(output.top());
             output.pop();
