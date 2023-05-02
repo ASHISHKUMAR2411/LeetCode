@@ -9,13 +9,12 @@ public:
             if(mp.size() == 1){
                 count= (count%mod + mp[s[i]]%mod)%mod;
             }
-            if(mp.size() > 1){
-                for(auto k:mp){
-                    if(k.first != s[i]){
-                        mp.erase(k.first);
-                        break;
-                    }
+            while(mp.size() > 1){
+                mp[s[l]]--;
+                if(mp[s[l]] == 0){
+                    mp.erase(s[l]);
                 }
+                l++;
                 if(mp.size() == 1) count = (count%mod + 1%mod)%mod;
             }
         }
