@@ -24,43 +24,52 @@ class Array {
 // } Driver Code Ends
 class Solution {
   public:
-    // void solve(vector<int> &coins, int i, int taken, int sum, int &count, int &k, int &target){
-    //     if(i == coins.size()) return;
-    //     if(sum > target) return;
-    //     if(taken > k) return;
-    //     if(sum == target and taken == k){
-    //         count++;
-    //         return;
-    //     }
-    //     solve(coins, i, taken + 1, sum + coins[i], count, k, target);
-    //     solve(coins, i+1, taken, sum, count, k, target);
-    // }
+   bool solve(int index,int target,int k,vector<int> &coins,vector<vector<int>> &dp)
+    {
+        if(target==0)
+        {
+            if(k==0) return true;
+            return false;
+        }
+        if(index==0) 
+        {
+            if(target%coins[0]==0 && target/coins[0]==k) return true;
+            return false;
+        }
+        if(dp[target][k]!=-1) return dp[target][k];
+        bool notake=solve(index-1,target,k,coins,dp);
+        bool take=false;
+        if(target>=coins[index])
+        {
+            take=solve(index,target-coins[index],k-1,coins,dp);
+        }
+        return dp[target][k]=(take || notake);
+    }
     bool makeChanges(int N, int K, int target, vector<int> &coins) {
         // code here
-        // int sum = 0;
-        // int count = 0;
-        // solve(coins, 0, 0, sum, count, K, target);
-        // return count;
-        vector<int> dp(target + 1, 0);
-        for(int i = 0; i < N; i++){
-            if(coins[i] <= target){
-                dp[coins[i]] = 1;
-            }
-        }
-        for(int i = 1; i < K; i++){
-            vector<int> dp1(target+1, 0);
-            for(int j = 0; j <= target; j++){
-                if(dp[j] == 1){
-                    for(int k = 0; k < N; k++){
-                        if(coins[k] + j <= target){
-                            dp1[j+coins[k]] = 1;
-                        }
-                    }
-                }
-            }
-            dp = dp1;
-        }
-        return dp[target] == 1;
+        sort(coins.begin(), coins.end());
+        vector<vector<int>> dp(target + 1, vector<int>(K+1,-1));
+        return solve(N-1, target, K, coins, dp);
+        // vector<int> dp(target + 1, 0);
+        // for(int i = 0; i < N; i++){
+        //     if(coins[i] <= target){
+        //         dp[coins[i]] = 1;
+        //     }
+        // }
+        // for(int i = 1; i < K; i++){
+        //     vector<int> dp1(target+1, 0);
+        //     for(int j = 0; j <= target; j++){
+        //         if(dp[j] == 1){
+        //             for(int k = 0; k < N; k++){
+        //                 if(coins[k] + j <= target){
+        //                     dp1[j+coins[k]] = 1;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     dp = dp1;
+        // }
+        // return dp[target] == 1;
     }
 };
 
