@@ -11,6 +11,11 @@ class Solution{
 public:
     int minColour(int N, int M, vector<int> mat[]) {
         // code here
+        // in this we are finding the incoming count on all nodes
+        // those with 0 incoming nodes will be our starting point 
+        // and then we create a adj list
+        // we traverse to the children of starting nodes and reduce their incoming count and then if incoming is zero we reached our next level so we increase our count
+        // so basically we finding all the level of nodes, the count of the levels is our answer
         vector<int> incoming(N+1, 0);
         for(int i = 0; i < M; i++){
             incoming[mat[i][0]]++;
