@@ -38,15 +38,15 @@ void power(long long F[2][2], long long n)
  
 void multiply(long long F[2][2], long long M[2][2])
 {
-    long long x = ((F[0][0]%mod * M[0][0]%mod)%mod + (F[0][1]%mod * M[1][0]%mod)%mod)%mod;
-    long long y =(( F[0][0]%mod * M[0][1]%mod)%mod + (F[0][1]%mod * M[1][1]%mod)%mod)%mod;
-    long long z = ((F[1][0]%mod * M[0][0]%mod)%mod + (F[1][1]%mod * M[1][0]%mod)%mod)%mod;
-    long long w = ((F[1][0]%mod * M[0][1]%mod)%mod + (F[1][1]%mod * M[1][1]%mod)%mod)%mod;
+    long long x = ((F[0][0]* M[0][0])%mod + (F[0][1] * M[1][0])%mod)%mod;
+    long long y =(( F[0][0] * M[0][1])%mod + (F[0][1] * M[1][1])%mod)%mod;
+    long long z = ((F[1][0]* M[0][0])%mod + (F[1][1] * M[1][0])%mod)%mod;
+    long long w = ((F[1][0] * M[0][1])%mod + (F[1][1] * M[1][1])%mod)%mod;
      
-    F[0][0] = x%mod;
-    F[0][1] = y%mod;
-    F[1][0] = z%mod;
-    F[1][1] = w%mod;
+    F[0][0] = x;
+    F[0][1] = y;
+    F[1][0] = z;
+    F[1][1] = w;
 }
 class Solution {
   public:
