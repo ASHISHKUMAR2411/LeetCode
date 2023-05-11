@@ -9,13 +9,12 @@ class Solution{
 	int m = 1e9+7;
 	int solve(vector<vector<int>>&dp, int sum, int arr[], int n){
 	   // if(sum == 0) return 1;
-	    if(n == 0){
-	        if(arr[n] == sum && sum == 0) return 2;
-	        if(arr[n] == sum || sum == 0) return 1;
-	        return 0;
-	    }
-	    if(dp[n][sum] != -1) return dp[n][sum];
-	   // if(sum == curr_sum) return 1;
+        if(n == 0){
+            if(arr[n] == sum && sum == 0) return 2;
+            if(arr[n] == sum || sum == 0) return 1;
+            return 0;
+        }
+	   if(dp[n][sum] != -1) return dp[n][sum];\
 	   int l = 0, r = 0;
 	    if(arr[n] <= sum)
     	    l = solve(dp, sum - arr[n] , arr, n-1);
