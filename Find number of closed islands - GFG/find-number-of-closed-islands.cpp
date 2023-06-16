@@ -11,65 +11,62 @@ class Solution {
     public:
     int closedIslands(vector<vector<int>>& matrix, int N, int M) {
         // Code here
-        vector<vector<int>> vis(N, vector<int>(M,0));
-        queue<pair<int,int>> q;
-        // matrix first and last row
-        for(int i = 0; i < M; i++){
-            if(matrix[0][i] == 1){
-                q.push({0,i});
-            }
-            if(matrix[N-1][i] == 1){
-                q.push({N-1, i});
-            }
-        }
-        
-        // matrix first column and last column
+        queue<pair<int,int>> cornerIsland;
         for(int i = 0; i < N; i++){
             if(matrix[i][0] == 1){
-                q.push({i,0});
+                cornerIsland.push({i,0});
+                matrix[i][0] = 0;
             }
             if(matrix[i][M-1] == 1){
-                q.push({i, M-1});
+                matrix[i][M-1] = 0;
+                cornerIsland.push({i,M-1});
+            }
+        }
+        for(int i = 0; i < M; i++){
+            if(matrix[0][i] == 1){
+                matrix[0][i] = 0;
+                cornerIsland.push({0,i});
+            }
+            if(matrix[N-1][i] == 1){
+                matrix[N-1][i] = 0;
+                cornerIsland.push({N-1,i});
             }
         }
         int dx[] = {0,0,-1,1};
         int dy[] = {-1,1,0,0};
-        while(!q.empty()){
-            pair<int,int> top = q.front();
-            q.pop();
-            int x = top.first, y = top.second;
-            vis[x][y] = 1;
+        while(!cornerIsland.empty()){
+            int x = cornerIsland.front().first;
+            int y = cornerIsland.front().second;
+            cornerIsland.pop();
             for(int i = 0; i < 4; i++){
                 int x_ = x + dx[i];
                 int y_ = y + dy[i];
-                if(x_ < 0 or x_ >= N or y_ >= M or y_ < 0 or vis[x_][y_] == 1 or matrix[x_][y_] == 0) continue;
-                vis[x_][y_] = 1;
+                if(x_ >= N or y_ >= M or x_ < 0 or y_ < 0) continue;
                 if(matrix[x_][y_] == 1){
-                    q.push({x_,y_});
+                    cornerIsland.push({x_, y_});
+                    matrix[x_][y_] = 0;
                 }
             }
-            
         }
         int count = 0;
-        for(int i = 0; i < N; i++){
+        for(int i =0 ; i < N; i++){
             for(int j = 0; j < M; j++){
-                if(matrix[i][j] == 1 and vis[i][j] == 0){
+                if(matrix[i][j] == 1){
                     count++;
+                    matrix[i][j] = 0;
+                    queue<pair<int,int>> q;
                     q.push({i,j});
-                    vis[i][j] = 1;
                     while(!q.empty()){
-                        auto top = q.front();
+                        int x = q.front().first;
+                        int y = q.front().second;
                         q.pop();
-                        int x = top.first;
-                        int y = top.second;
-                        vis[x][y] = 1;
-                        for(int k = 0; k < 4; k++){
-                            int x_ = x + dx[k];
-                            int y_ = y + dy[k];
-                            if(x_ < 0 or x_ >= N or y_ >= M or y_ < 0 or vis[x_][y_] == 1 or matrix[x_][y_] == 0) continue;
-                            vis[x_][y_] = 1;
+                        for(int i = 0; i < 4; i++){
+                            int x_ = x + dx[i];
+                            int y_ = y + dy[i];
+                            if(x_ >= N or y_ >= M or x_ < 0 or y_ < 0) continue;
                             if(matrix[x_][y_] == 1){
-                                q.push({x_,y_});
+                                q.push({x_, y_});
+                                matrix[x_][y_] = 0;
                             }
                         }
                     }
