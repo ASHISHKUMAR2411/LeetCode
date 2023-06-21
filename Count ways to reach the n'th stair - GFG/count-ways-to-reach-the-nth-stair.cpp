@@ -18,8 +18,11 @@ class Solution
     int countWays(int n)
     {
         memset(dp, -1, sizeof(dp));
-        dp[0] = 1;
-        return solve(n);
+        dp[0] = 1, dp[1] = 1;
+        for(int i = 2; i <= n; i++){
+            dp[i] = (dp[i-2]%mod + dp[i-1]%mod)%mod;
+        }
+        return dp[n];
     }
 };
 
