@@ -7,7 +7,7 @@ using namespace std;
 class Solution {
   public:
     int dp[100005];
-    // Recursive Solution 
+    // Recursive Solution  & DP Memoization
     int solve(int i, vector<int> &h){
         if(i <= 0) return 0;
         if(dp[i] != -1) return dp[i];
@@ -18,9 +18,19 @@ class Solution {
         }
         return dp[i] = min(sum2, sum1);
     }
-    int minimumEnergy(vector<int>& height, int n) {
+    int minimumEnergy(vector<int>& h, int n) {
         memset(dp, -1, sizeof(dp));
-        return solve(n-1, height);
+        dp[0] = 0;
+        for(int i = 1; i < n; i++){
+            int sum1 = dp[i-1] + abs(h[i] - h[i-1]);
+            int sum2 = 1e9;
+            if(i > 1){
+                sum2 = dp[i-2] + abs(h[i] - h[i-2]);
+            }
+            dp[i] = min(sum1, sum2);
+        }
+        return dp[n-1];
+        // return solve(n-1, h);
     }
 };
 
