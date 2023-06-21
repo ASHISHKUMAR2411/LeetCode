@@ -18,18 +18,23 @@ class Solution {
         }
         return dp[i] = min(sum2, sum1);
     }
+    // Tabulation Solution and Space Optimization 
     int minimumEnergy(vector<int>& h, int n) {
-        memset(dp, -1, sizeof(dp));
-        dp[0] = 0;
+        // memset(dp, -1, sizeof(dp));
+        // dp[0] = 0;
+        int prev = 0, prev1 = 0;
         for(int i = 1; i < n; i++){
-            int sum1 = dp[i-1] + abs(h[i] - h[i-1]);
+            int sum1 = prev + abs(h[i] - h[i-1]);
             int sum2 = 1e9;
             if(i > 1){
-                sum2 = dp[i-2] + abs(h[i] - h[i-2]);
+                sum2 = prev1 + abs(h[i] - h[i-2]);
             }
-            dp[i] = min(sum1, sum2);
+            int curr = min(sum1, sum2);
+            prev1 = prev;
+            prev = curr;
         }
-        return dp[n-1];
+        return prev;
+        // return dp[n-1];
         // return solve(n-1, h);
     }
 };
