@@ -10,18 +10,25 @@ class Solution{
 public:
     // recursive solution
     int dp[1000005];
-    int solve(int index, int *arr){
-        if(index < 0) return 0;
-        if(dp[index] != -1) return dp[index];
-        int take = arr[index] + solve(index - 2, arr);
-        int ntake = solve(index - 1, arr);
-        return dp[index] = max(take, ntake);
-    }
+    // int solve(int index, int *arr){
+    //     if(index < 0) return 0;
+    //     if(dp[index] != -1) return dp[index];
+    //     int take = arr[index] + solve(index - 2, arr);
+    //     int ntake = solve(index - 1, arr);
+    //     return dp[index] = max(take, ntake);
+    // }
 	// calculate the maximum sum with out adjacent
 	int findMaxSum(int *arr, int n) {
 	    // code here
+	    // now solving for Tabulation
 	    memset(dp, -1, sizeof(dp));
-	    return solve(n-1, arr);
+	    dp[0] = arr[0];
+	    for(int i = 1; i < n; i++){
+	        int take = arr[i];
+	        if(i > 1) take += dp[i-2];
+	        dp[i] = max(take, dp[i-1]);
+	    }
+	    return dp[n-1];
 	}
 };
 
